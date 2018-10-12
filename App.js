@@ -1,30 +1,31 @@
 // @flow strict
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components';
+import { Platform, Text, View } from 'react-native';
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+const Container = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5FCFF;
+`;
+
+const Welcome = styled(Text)`
+  margin: 10px;
+  font-size: 20px;
+  text-align: center;
+`;
+
+const Instructions = styled(Text)`
+  margin-bottom: 5px;
+  color: #333333;
+  text-align: center;
+`;
 
 type Props = {};
 
@@ -32,11 +33,11 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Container>
+        <Welcome>Welcome to React Native!</Welcome>
+        <Instructions>To get started, edit App.js</Instructions>
+        <Instructions>{instructions}</Instructions>
+      </Container>
     );
   }
 }

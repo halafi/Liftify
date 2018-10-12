@@ -9,12 +9,14 @@
     "flow": "flow",
     "flow-stop": "flow stop",
     "eslint": "eslint --ext .js --ext .jsx .",
-    "eslint:fix": "eslint --fix --ext .js --ext .jsx ."
+    "eslint:fix": "eslint --fix --ext .js --ext .jsx .",
+    "stylelint": "stylelint '**/*.js'"
   },
   "dependencies": {
     "flow-bin": "^0.78.0",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.3"
+    "react-native": "0.57.3",
+    "styled-components": "^3.4.10"
   },
   "devDependencies": {
     "@babel/preset-flow": "^7.0.0",
@@ -32,21 +34,15 @@
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-react-native": "^3.3.0",
     "jest": "23.6.0",
+    "jest-styled-components": "^6.2.1",
     "metro-react-native-babel-preset": "0.48.1",
     "prettier": "^1.14.3",
     "react-dom": "^16.5.2",
-    "react-test-renderer": "16.6.0-alpha.8af6728"
-  },
-  "jest": {
-    "preset": "react-native",
-    "testMatch": [
-      "**/?(*.)test.js?(x)"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "<rootDir>/etc/jestSetup.js"
-    ]
+    "react-test-renderer": "16.6.0-alpha.8af6728",
+    "stylelint": "^9.6.0",
+    "stylelint-config-rational-order": "^0.0.2",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.5.0"
   }
 }
