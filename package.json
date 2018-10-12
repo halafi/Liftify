@@ -4,19 +4,49 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "test": "jest",
+    "flow": "flow",
+    "flow-stop": "flow stop",
+    "eslint": "eslint --ext .js --ext .jsx .",
+    "eslint:fix": "eslint --fix --ext .js --ext .jsx ."
   },
   "dependencies": {
+    "flow-bin": "^0.78.0",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3"
   },
   "devDependencies": {
+    "@babel/preset-flow": "^7.0.0",
     "babel-jest": "23.6.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-native": "^3.3.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
+    "prettier": "^1.14.3",
+    "react-dom": "^16.5.2",
     "react-test-renderer": "16.6.0-alpha.8af6728"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testMatch": [
+      "**/?(*.)test.js?(x)"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/etc/jestSetup.js"
+    ]
   }
 }
