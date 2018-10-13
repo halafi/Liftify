@@ -6,7 +6,9 @@ import styled from 'styled-components';
 const StyledView = styled(View)`
   align-items: center;
   width: 100%;
-  background-color: ${({ disabled }) => (disabled ? 'gray' : '#2196f3')};
+  background-color: ${({ disabled, kind }) =>
+    // eslint-disable-next-line no-nested-ternary
+    disabled ? 'gray' : kind === 'danger' ? '#ff4444' : '#2196f3'};
 `;
 
 const StyledText = styled(Text)`
@@ -19,11 +21,13 @@ type Props = {
   onPress: any => void,
   children: React.Node,
   disabled?: boolean,
+  style?: any,
+  kind?: 'primary' | 'danger',
 };
 
-const Button = ({ children, onPress, disabled }: Props) => (
+const Button = ({ children, onPress, disabled, style, kind }: Props) => (
   <TouchableNativeFeedback disabled={disabled} onPress={onPress}>
-    <StyledView disabled={disabled}>
+    <StyledView style={style} disabled={disabled} kind={kind}>
       <StyledText>{children}</StyledText>
     </StyledView>
   </TouchableNativeFeedback>
@@ -31,6 +35,8 @@ const Button = ({ children, onPress, disabled }: Props) => (
 
 Button.defaultProps = {
   disabled: false,
+  style: null,
+  kind: 'primary',
 };
 
 export default Button;

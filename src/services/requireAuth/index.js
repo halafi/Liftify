@@ -21,42 +21,39 @@ const StyledTextInput = styled(TextInput)`
 `;
 
 function requireAuth(WrappedComponent) {
-  return class extends React.Component {
-    render() {
-      return (
-        <AuthContext.Consumer>
-          {({ user, error, email, password, loading, change, login }) => {
-            if (!user) {
-              return (
-                <>
-                  {Boolean(error) && (
-                    <Error>
-                      <ErrorText>{error}</ErrorText>
-                    </Error>
-                  )}
-                  <StyledTextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => change('email', text)}
-                  />
-                  <StyledTextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => change('password', text)}
-                    secureTextEntry
-                  />
-                  <Button disabled={loading || !email || !password} onPress={login}>
-                    Sign In
-                  </Button>
-                </>
-              );
-            }
-            return <WrappedComponent {...this.props} />;
-          }}
-        </AuthContext.Consumer>
-      );
-    }
-  };
+  const Component = props => (
+    <AuthContext.Consumer>
+      {({ user, error, email, password, loading, change, login }) => {
+        if (!user) {
+          return (
+            <View>
+              {error && (
+                <Error>
+                  <ErrorText>{error}</ErrorText>
+                </Error>
+              )}
+              <StyledTextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={text => change('email', text)}
+              />
+              <StyledTextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={text => change('password', text)}
+                secureTextEntry
+              />
+              <Button disabled={loading || !email || !password} onPress={login}>
+                Sign In
+              </Button>
+            </View>
+          );
+        }
+        return <WrappedComponent {...props} />;
+      }}
+    </AuthContext.Consumer>
+  );
+  return Component;
 }
 
 export default requireAuth;

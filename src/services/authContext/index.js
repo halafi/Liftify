@@ -18,11 +18,13 @@ type AuthContext = {|
   user: ?any,
   login: (string, string) => void,
   logout: () => void,
+  deleteUser: () => void,
   change: ('email' | 'password', string) => void,
   error: ?string,
   loading: boolean,
   email: string,
   password: string,
+  credential: ?any,
 |};
 
 const { Consumer, Provider } = React.createContext(
@@ -31,7 +33,9 @@ const { Consumer, Provider } = React.createContext(
     login: () => {},
     logout: () => {},
     change: () => {},
+    deleteUser: () => {},
     error: null,
+    credential: null,
     loading: false,
     email: '',
     password: '',
@@ -48,6 +52,7 @@ class AuthProvider extends React.PureComponent<Props, State> {
       password: '',
       error: null,
       loading: false,
+      credential: null,
     };
   }
 
@@ -72,7 +77,7 @@ class AuthProvider extends React.PureComponent<Props, State> {
   handleLogin = () => {
     const { email, password } = this.state;
     this.setState({
-      error: '',
+      error: null,
       loading: true,
     });
 
@@ -92,11 +97,15 @@ class AuthProvider extends React.PureComponent<Props, State> {
   handleLogout = () => firebase.auth().signOut();
 
   handleLoginSuccess = () => {
+    const { email, password } = this.state;
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+
     this.setState({
-      error: '',
+      error: null,
       loading: false,
       email: '',
       password: '',
+      credential,
     });
   };
 
@@ -107,8 +116,16 @@ class AuthProvider extends React.PureComponent<Props, State> {
     });
   };
 
+  handleDeleteUser = () => {
+    const user = firebase.auth().currentUser;
+    const { credential } = this.state;
+    if (credential) {
+      user.reauthenticateWithCredential(credential).then(() => user.delete());
+    }
+  };
+
   render() {
-    const { user, email, password, error, loading } = this.state;
+    const { user, email, password, error, loading, credential } = this.state;
     const { children } = this.props;
 
     return (
@@ -118,10 +135,12 @@ class AuthProvider extends React.PureComponent<Props, State> {
           login: this.handleLogin,
           logout: this.handleLogout,
           change: this.handleChange,
+          deleteUser: this.handleDeleteUser,
           error,
           loading,
           email,
           password,
+          credential,
         }}
       >
         {children}

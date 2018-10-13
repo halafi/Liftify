@@ -4,12 +4,7 @@ import styled from 'styled-components';
 import { Text, View } from 'react-native';
 import Tabs from './scenes/Tabs';
 import * as AuthContext from './services/authContext';
-
-const Flex = styled(View)`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
+import Flex from './primitives/Flex/index';
 
 const StyledView = styled(View)`
   flex: 1;
@@ -33,22 +28,18 @@ const SubTitleText = styled(Text)`
   font-size: 14px;
 `;
 
-// eslint-disable-next-line
-class App extends React.Component<> {
-  render() {
-    return (
-      <AuthContext.Provider>
-        <StyledView>
-          <Title>
-            <TitleText>Liftify 🏋️‍♂️</TitleText>
-            <Flex>
-              <SubTitleText>Simple progress tracker</SubTitleText>
-            </Flex>
-          </Title>
-          <Tabs />
-        </StyledView>
-      </AuthContext.Provider>
-    );
-  }
-}
+const App = () => (
+  <AuthContext.Provider>
+    <StyledView>
+      <Title>
+        <TitleText>Liftify 🏋️‍♂️</TitleText>
+        <Flex>
+          <SubTitleText>Simple progress tracker</SubTitleText>
+        </Flex>
+      </Title>
+      <Tabs />
+    </StyledView>
+  </AuthContext.Provider>
+);
+
 export default App;

@@ -2,7 +2,7 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from 'react-navigation';
-import Stats from './Stats';
+import Home from './Home';
 import Profile from './Profile';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 
 const Tabs = createBottomTabNavigator(
   {
-    Home: { screen: Stats },
+    Home: { screen: Home },
     Profile: { screen: Profile },
   },
   {
