@@ -1,8 +1,9 @@
 // @flow strict
 import React from 'react';
-// import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase';
 import styled from 'styled-components';
-import { Text, View, ScrollView, TextInput } from 'react-native';
+import { Text, View } from 'react-native';
+import RequireAuth from './components/RequireAuth/index';
 import Button from './components/Button/index';
 
 const Flex = styled(View)`
@@ -23,14 +24,6 @@ const Title = styled(View)`
   background-color: #001f3f;
 `;
 
-const SubTitle = styled(View)`
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 4px;
-  background-color: #001f3f;
-`;
-
 const TitleText = styled(Text)`
   color: white;
   font-size: 24px;
@@ -46,41 +39,48 @@ const Body = styled(View)`
   padding: 10px;
 `;
 
-const Messages = styled(ScrollView).attrs({
-  contentContainerStyle: {
-    paddingVertical: 20,
-  },
-  bounces: true,
-})`
-  max-height: 200px;
-  margin: 10px 0;
-`;
-
-const Message = styled(Text)`
-  font-size: 18px;
-`;
-
-const StyledTextInput = styled(TextInput)`
-  height: 50px;
-  font-size: 24px;
-`;
-
-const BigText = styled(Text)`
-  font-size: 80px;
-`;
+// const Messages = styled(ScrollView).attrs({
+//   contentContainerStyle: {
+//     paddingVertical: 20,
+//   },
+//   bounces: true,
+// })`
+//   max-height: 200px;
+//   margin: 10px 0;
+// `;
 
 type State = {
   email: string,
   password: string,
   user: ?any,
+  error: ?string,
+  loading: boolean,
 };
 
 export default class App extends React.Component<{}, State> {
-  state = {
-    email: '',
-    password: '',
-    user: null,
-  };
+  constructor() {
+    super();
+    this.unsubscriber = null;
+    this.state = {
+      user: null,
+      email: '',
+      password: '',
+      error: null,
+      loading: false,
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscriber = firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user });
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscriber) {
+      this.unsubscriber();
+    }
+  }
 
   handleChange = (field: 'email' | 'password', value: string): void => {
     this.setState({
@@ -88,20 +88,47 @@ export default class App extends React.Component<{}, State> {
     });
   };
 
-  handleLogin() {
+  handleLogin = () => {
+    const { email, password } = this.state;
+    this.setState({
+      error: '',
+      loading: true,
+    });
+
     firebase
       .auth()
-      .signInAnonymously()
-      .then(credential => {
-        if (credential) {
-          console.log('default app user ->', credential.user.toJSON());
-        }
+      .signInWithEmailAndPassword(email, password)
+      .then(this.handleLoginSuccess)
+      .catch(() => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(this.handleLoginSuccess)
+          .catch(this.handleLoginFail);
       });
-  }
+  };
+
+  handleLogout = () => firebase.auth().signOut();
+
+  handleLoginSuccess = () => {
+    this.setState({
+      error: '',
+      loading: false,
+      email: '',
+      password: '',
+    });
+  };
+
+  handleLoginFail = err => {
+    this.setState({
+      error: `Authentication failed: ${err.message}`,
+      loading: false,
+    });
+  };
 
   render() {
-    const { email, password } = this.state;
-    const input = '';
+    const { user, email, password, error, loading } = this.state;
+    const disabled = loading || !email.length || !password.length;
 
     return (
       <StyledView>
@@ -112,24 +139,22 @@ export default class App extends React.Component<{}, State> {
           </Flex>
         </Title>
         <Body>
-          {/* <Messages>
-            {messages.map((msg, i) => (
-              // eslint-disable-next-line
-              <Message key={`${msg}-${i}`}>{msg}</Message>
-            ))}
-          </Messages> */}
-          <StyledTextInput
-            placeholder="Email"
-            value={email}
-            onChange={value => this.handleChange('email', value)}
-          />
-          <StyledTextInput
-            placeholder="Password"
-            value={password}
-            onChange={value => this.handleChange('password', value)}
-            secureTextEntry
-          />
-          <Button onPress={this.handleLogin}>Sign In</Button>
+          {!user && (
+            <RequireAuth
+              user={user}
+              email={email}
+              password={password}
+              error={error}
+              disabled={disabled}
+              onChange={this.handleChange}
+              onLogin={this.handleLogin}
+            />
+          )}
+          {user && (
+            <View>
+              <Button onPress={this.handleLogout}>Logout</Button>
+            </View>
+          )}
         </Body>
       </StyledView>
     );

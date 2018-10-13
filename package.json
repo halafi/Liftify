@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
