@@ -13,9 +13,10 @@
     "stylelint": "stylelint '**/*.js'"
   },
   "dependencies": {
-    "flow-bin": "^0.78.0",
+    "flow-bin": "^0.83.0",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3",
+    "react-native-firebase": "^5.0.0",
     "styled-components": "^3.4.10"
   },
   "devDependencies": {

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "760038494008",
+    "firebase_url": "https://liftify-48445.firebaseio.com",
+    "project_id": "liftify-48445",
+    "storage_bucket": "liftify-48445.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760038494008:android:9ba7b2ac8d75f314",
+        "android_client_info": {
+          "package_name": "com.things"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760038494008-nef46q55toiue5ucqgd9ehub1q2gvsc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtiIrzAW58VMtpsJdNcpQcxUl9LAgE8C0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

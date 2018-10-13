@@ -48,7 +48,8 @@ const StyledTextInput = styled(TextInput)`
 
 export default class App extends React.Component<{}> {
   render() {
-    const { input, messages } = this.state;
+    const input = '';
+    const messages = ['bur', 'kek'];
 
     return (
       <StyledView>
@@ -59,8 +60,6 @@ export default class App extends React.Component<{}> {
           <StyledTextInput
             placeholder="Type your text"
             value={input}
-            onChangeText={text => this.setState({ input: text })}
-            onSubmitEditing={this.handleSubmit}
           />
           <Messages>
             {messages.map((msg, i) => (
@@ -68,7 +67,7 @@ export default class App extends React.Component<{}> {
               <Message key={`${msg}-${i}`}>{msg}</Message>
             ))}
           </Messages>
-          <Button onPress={() => this.setState({ messages: [] })}>Clear</Button>
+          <Button>Clear</Button>
         </Body>
       </StyledView>
     );
