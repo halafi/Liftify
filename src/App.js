@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Text, View } from 'react-native';
 import Tabs from './scenes/Tabs';
 import * as AuthContext from './services/authContext';
-import Flex from './primitives/Flex/index';
 
 const StyledView = styled(View)`
   flex: 1;
@@ -33,9 +32,7 @@ const App = () => (
     <StyledView>
       <Title>
         <TitleText>Liftify 🏋️‍♂️</TitleText>
-        <Flex>
-          <SubTitleText>Simple progress tracker</SubTitleText>
-        </Flex>
+        <SubTitleText>Simple progress tracker</SubTitleText>
       </Title>
       <Tabs />
     </StyledView>

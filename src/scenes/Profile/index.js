@@ -2,9 +2,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { View, Text } from 'react-native';
+import { format } from 'date-fns';
 import Button from '../../components/Button/index';
 import * as AuthContext from '../../services/authContext';
 import requireAuth from '../../services/requireAuth/index';
+import { DATE_FORMAT } from '../../consts/dateTime';
 
 const Body = styled(View)`
   margin-bottom: 20px;
@@ -53,10 +55,11 @@ const Profile = ({ navigation }: Props) => (
             <Strong>Email:</Strong> {userData.email}
           </Item>
           <Item>
-            <Strong>Last Sign In:</Strong> {userData.metadata.lastSignInTime}
+            <Strong>Last Sign In:</Strong>{' '}
+            {format(new Date(userData.metadata.lastSignInTime), DATE_FORMAT)}
           </Item>
           <Item>
-            <Strong>Joined:</Strong> {userData.metadata.creationTime}
+            <Strong>Joined:</Strong> {format(new Date(userData.metadata.creationTime), DATE_FORMAT)}
           </Item>
           <Actions>
             <Button
@@ -72,7 +75,7 @@ const Profile = ({ navigation }: Props) => (
             <DeleteButton kind="danger" onPress={deleteUser} disabled={!credential}>
               Delete Account
             </DeleteButton>
-            {!credential && <Item>If you wish to delete your account please Sign In again.</Item>}
+            {!credential && <Item>To delete your account Sign Out and Sign In again.</Item>}
           </Actions>
         </Body>
       );

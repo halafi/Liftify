@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:reset": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
     "test": "jest",
     "flow": "flow",
@@ -13,6 +14,7 @@
     "stylelint": "stylelint '**/*.js'"
   },
   "dependencies": {
+    "date-fns": "^2.0.0-alpha.22",
     "flow-bin": "^0.83.0",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3",
